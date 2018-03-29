@@ -1,0 +1,146 @@
+set nocompatible    
+filetype off      
+
+" set the runtime path to include Vundle and initialize
+set rtp+=/etc/vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+"Plugin 'file:///home/gmarik/path/to/plugin'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'tpope/vim-surround'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'valloric/youcompleteme'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'pangloss/vim-javascript'
+Plugin 'tyru/open-browser.vim'
+Plugin 'honza/vim-snippets'
+Plugin 'tomtom/tcomment_vim'
+Plugin '907th/vim-auto-save'
+
+" All of your Plugins must be added before the following line
+" =========================================================
+  call vundle#end()
+  filetype plugin indent on
+  
+  let g:user_emmet_mode='n'    "only enable normal mode functions.
+  let g:user_emmet_mode='inv'  "enable all functions, which is equal to
+  let g:user_emmet_mode='a'    "enable all function in all mode.
+  let g:user_emmet_install_global = 0
+  autocmd FileType html,css EmmetInstall
+  
+  "Plugin airline
+  let g:airline_left_sep='>'
+  let g:airline_right_sep='<'
+  let g:airline_detect_modified=1
+  let g:airline_detect_paste=1
+  let g:airline_detect_iminsert=0
+  let g:airline_inactive_collapse=1
+  let g:airline_powerline_fonts=0
+  let g:airline_mode_map = {}  
+  " or copy paste the following into your vimrc for shortform text
+  let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'n'  : 'N',
+      \ 'i'  : 'I',
+      \ 'R'  : 'R',
+      \ 'c'  : 'C',
+      \ 'v'  : 'V',
+      \ 'V'  : 'V',
+      \ '' : 'V',
+      \ 's'  : 'S',
+      \ 'S'  : 'S',
+      \ '' : 'S',
+      \ }
+
+  if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+  endif
+
+  " unicode symbols
+  let g:airline_left_sep = '»'
+  let g:airline_left_sep = '▶'
+  let g:airline_right_sep = '«'
+  let g:airline_right_sep = '◀'
+  let g:airline_symbols.linenr = '␊'
+  let g:airline_symbols.linenr = '␤'
+  let g:airline_symbols.linenr = '¶'
+  let g:airline_symbols.branch = '⎇'
+  let g:airline_symbols.paste = 'ρ'
+  let g:airline_symbols.paste = 'Þ'
+  let g:airline_symbols.paste = '∥'
+  let g:airline_symbols.whitespace = 'Ξ'
+
+  " powerline symbols
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  " let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = ''
+
+  " old vim-powerline symbols
+  let g:airline_left_sep = '⮀'
+  let g:airline_left_alt_sep = '⮁'
+  let g:airline_right_sep = '⮂'
+  let g:airline_right_alt_sep = '⮃'
+  let g:airline_symbols.branch = '⭠'
+  let g:airline_symbols.readonly = '⭤'
+  let g:airline_symbols.linenr = '⭡'
+  
+  " YouComplateMePlugin
+  " let g:ycm_keep_logfiles = 1
+  " let g:ycm_log_level = 'debug'
+  let g:ycm_server_keep_logfiles = 1
+  let g:ycm_server_log_level = 'debug'
+  
+  "Open-Browser
+  let g:netrw_nogx = 1 " disable netrw's gx mapping.
+  nmap gx <Plug>(openbrowser-smart-search)
+  vmap gx <Plug>(openbrowser-smart-search) 
+
+  "easymontion
+  map <Leader> <Plug>(easymotion-prefix)
+  map <f> (easymotion-prefix)
+
+
+  "Autosave
+  let g:auto_save = 1
+  let g:auto_save_in_insert_mode = 0
+
+"==================No Plugin========================
+
+set nu
+set rnu
+syntax enable
+colorscheme monokai
+
+let mapleader = "\<Space>"
+set noswapfile
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+set incsearch
+setlocal foldmethod=syntax
+au VimEnter *  NERDTree /home/berri/Documents/learning
+
+
+
+" ============== Mapping =============
+imap jj <Esc>
+nnoremap <F3> :vsplit $MYVIMRC<cr> 
+nnoremap <F4> :OpenBrowserSearch 
+nnoremap <F5> :set filetype=
+nnoremap ZZ :qa!<cr>
+nnoremap  :TComment<cr>
