@@ -9,9 +9,6 @@
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnosterzak"
 figlet -c ".Bismillah."
-#
-# Set list of themes to load
-# Setting this variable when ZSH_THEME=random
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
 # cause zsh load theme from this variable instead of
@@ -95,21 +92,78 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 alias update="sudo apt-get update"
 alias upgrade="sudo apt-get upgrade"
+alias dg="sudo apt-get update && sudo apt-get upgrade"
 alias install="sudo apt-get --assume-yes install"
 alias autoremove="sudo apt-get autoremove"
-alias f="firefox"
+alias f="vifm"
+alias x="firefox"
+alias p="ping google.com"
+alias s="speedtest"
 alias zshrc="vim ~/.zshrc"
+alias szsh="source ~/.zshrc"
+alias vimrc="vim ~/.vimrc"
 alias ppa="sudo add-apt-repository"
 alias remppa="sudo add-apt-repository --remove"
 alias np="sudo npm -g update"
-# alias zshconfig="mate ~/.zshrc"
-# alias zshconfig="mate ~/.zshrc"
-# alias zshconfig="mate ~/.zshrc"
-# alias zshconfig="mate ~/.zshrc"
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="/home/berri/Documents/Instalasi/flutter/bin:$PATH"
+alias cdown="cd /home/berri/Downloads"
+alias cdev="cd /home/berri/Development"
+alias htdocs="cd /opt/lampp/htdocs"
+alias gc="sudo git clone"
+alias ch="sudo chmod -R 777"
+alias apc="sudo /etc/init.d/apache2 stop && gksudo /opt/lampp/manager-linux-x64.run"
+alias smv="sudo mv"
+alias rmr="sudo rm -R"
+alias waktu="date -d \"\$(</proc/uptime awk '{print \$1}') seconds ago\""
+
+export PATH="/opt/android-studio/bin:$PATH"
+export PATH="/opt/flutter/bin:$PATH"
 export PATH="/opt/androidSDK/tools:$PATH"
 export PATH="/opt/androidSDK/platform-tools:$PATH"
-eval "$(rbenv init -)"
+export PATH="/opt/genymobile/genymotion:$PATH"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+# alias zshconfig="mate ~/.zshrc"
+
+
+function web_search() {
+  emulate -L zsh
+
+  # define search engine URLS
+  typeset -A urls
+  urls=(
+    google      "https://www.google.com/search?q="
+  )
+
+  # check whether the search engine is supported
+  if [[ -z "$urls[$1]" ]]; then
+    echo "Search engine $1 not supported."
+    return 1
+  fi
+
+  # search or go to main page depending on number of arguments passed
+  if [[ $# -gt 1 ]]; then
+    # build search url:
+    # join arguments passed with '+', then append to search engine URL
+    url="${urls[$1]}${(j:+:)@[2,-1]}"
+  else
+    # build main page url:
+    # split by '/', then rejoin protocol (1) and domain (2) parts with '//'
+    url="${(j://:)${(s:/:)urls[$1]}[1,2]}"
+  fi
+
+  open_command "$url"
+}
+
+
+alias g='web_search google'
+
+[ ! -d "$HOME/usr/src" ] && mkdir -p "$HOME/usr/src"
+export PKG_CONFIG_PATH="${HOME}/usr/lib/pkgconfig:${PKG_CONFIG_PATH}"
+export CPATH="${HOME}/usr/include:${CPATH}"
+
+export MANPATH="${HOME}/usr/share/man:${MANPATH}"
+
+export PATH="${HOME}/usr/bin:${PATH}"
+export LD_LIBRARY_PATH="${HOME}/usr/lib:${LD_LIBRARY_PATH}"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPS="--extended"

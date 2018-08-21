@@ -2,7 +2,7 @@ set nocompatible
 filetype off      
 
 " set the runtime path to include Vundle and initialize
-set rtp+=/etc/vim/bundle/Vundle.vim
+set rtp+=/home/berri/.vim/bundle/Vundle
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -14,6 +14,7 @@ Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'powerline/powerline-fonts'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
@@ -27,6 +28,10 @@ Plugin 'tyru/open-browser.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'tomtom/tcomment_vim'
 Plugin '907th/vim-auto-save'
+Plugin 'udalov/kotlin-vim'
+Plugin 'auto-pairs'
+Plugin 'dart-lang/dart-vim-plugin'
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 
 " All of your Plugins must be added before the following line
 " =========================================================
@@ -39,6 +44,9 @@ Plugin '907th/vim-auto-save'
   let g:user_emmet_install_global = 0
   autocmd FileType html,css EmmetInstall
   
+  " Theme airline
+   let g:airline_theme='papercolor' 
+
   "Plugin airline
   let g:airline_left_sep='>'
   let g:airline_right_sep='<'
@@ -46,7 +54,7 @@ Plugin '907th/vim-auto-save'
   let g:airline_detect_paste=1
   let g:airline_detect_iminsert=0
   let g:airline_inactive_collapse=1
-  let g:airline_powerline_fonts=0
+  let g:airline_powerline_fonts = 1
   let g:airline_mode_map = {}  
   " or copy paste the following into your vimrc for shortform text
   let g:airline_mode_map = {
@@ -68,37 +76,26 @@ Plugin '907th/vim-auto-save'
   endif
 
   " unicode symbols
-  let g:airline_left_sep = '»'
+  "let g:airline_left_sep = '»'
+ " let g:airline_left_sep = ''
   let g:airline_left_sep = '▶'
-  let g:airline_right_sep = '«'
+  let g:airline_left_alt_sep = ''
+  "let g:airline_right_sep = '«'
+  "let g:airline_right_sep = ''
   let g:airline_right_sep = '◀'
-  let g:airline_symbols.linenr = '␊'
-  let g:airline_symbols.linenr = '␤'
+  let g:airline_right_alt_sep = ''
+  "let g:airline_symbols.linenr = ''
+  "let g:airline_symbols.linenr = '␊'
+  "let g:airline_symbols.linenr = '␤'
   let g:airline_symbols.linenr = '¶'
   let g:airline_symbols.branch = '⎇'
-  let g:airline_symbols.paste = 'ρ'
-  let g:airline_symbols.paste = 'Þ'
+  "let g:airline_symbols.branch = ''
+  "let g:airline_symbols.paste = 'ρ'
+  "let g:airline_symbols.paste = 'Þ'
   let g:airline_symbols.paste = '∥'
   let g:airline_symbols.whitespace = 'Ξ'
-
-  " powerline symbols
-  let g:airline_left_sep = ''
-  let g:airline_left_alt_sep = ''
-  " let g:airline_right_sep = ''
-  let g:airline_right_alt_sep = ''
-  let g:airline_symbols.branch = ''
   let g:airline_symbols.readonly = ''
-  let g:airline_symbols.linenr = ''
 
-  " old vim-powerline symbols
-  let g:airline_left_sep = '⮀'
-  let g:airline_left_alt_sep = '⮁'
-  let g:airline_right_sep = '⮂'
-  let g:airline_right_alt_sep = '⮃'
-  let g:airline_symbols.branch = '⭠'
-  let g:airline_symbols.readonly = '⭤'
-  let g:airline_symbols.linenr = '⭡'
-  
   " YouComplateMePlugin
   " let g:ycm_keep_logfiles = 1
   " let g:ycm_log_level = 'debug'
@@ -118,29 +115,47 @@ Plugin '907th/vim-auto-save'
   "Autosave
   let g:auto_save = 1
   let g:auto_save_in_insert_mode = 0
+  
+  "Snipmate / snippate
+
+"================== Script ========================
+
+" change cursor block to ibeam ketika insert
+if has("autocmd")
+  au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
+  au InsertEnter,InsertChange *
+    \ if v:insertmode == 'i' | 
+    \   silent execute '!echo -ne "\e[6 q"' | redraw! |
+    \ elseif v:insertmode == 'r' |
+    \   silent execute '!echo -ne "\e[4 q"' | redraw! |
+    \ endif
+  au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+endif
 
 "==================No Plugin========================
-
 set nu
 set rnu
 syntax enable
 colorscheme monokai
 
 let mapleader = "\<Space>"
+set autoread
 set noswapfile
 set expandtab
 set shiftwidth=2
 set softtabstop=2
 set incsearch
 setlocal foldmethod=syntax
-au VimEnter *  NERDTree /home/berri/Documents/learning
-
-
+au VimEnter *  NERDTree /home/berri/Development
+set confirm
 
 " ============== Mapping =============
 imap jj <Esc>
+set pastetoggle=<F2>
 nnoremap <F3> :vsplit $MYVIMRC<cr> 
 nnoremap <F4> :OpenBrowserSearch 
 nnoremap <F5> :set filetype=
 nnoremap ZZ :qa!<cr>
-nnoremap  :TComment<cr>
+nmap ff \s
+
+
